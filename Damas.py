@@ -103,14 +103,14 @@ print("")
 print("")
 
 #O tabuleiro.
-tabuleiro={ "8/a":'-',"8/b":PecaPreta,"8/c":'-',"8/d":PecaPreta,"8/e":'-',"8/f":PecaPreta,"8/g":'-',"8/h":PecaPreta,
-            "7/a":PecaPreta,"7/b":'-',"7/c":PecaPreta,"7/d":'-',"7/e":PecaPreta,"7/f":'-',"7/g":PecaPreta,"7/h":'-',
-            "6/a":'-',"6/b":PecaPreta,"6/c":'-',"6/d":PecaPreta,"6/e":'-',"6/f":PecaPreta,"6/g":'-',"6/h":PecaPreta,
-            "5/a":'-',"5/b":'-',"5/c":'-',"5/d":'-',"5/e":'-',"5/f":'-',"5/g":'-',"5/h":'-',
-            "4/a":'-',"4/b":'-',"4/c":'-',"4/d":'-',"4/e":'-',"4/f":'-',"4/g":'-',"4/h":'-',
-            "3/a":PecaBranca,"3/b":'-',"3/c":PecaBranca,"3/d":'-',"3/e":PecaBranca,"3/f":'-',"3/g":PecaBranca,"3/h":'-',
-            "2/a":'-',"2/b":PecaBranca,"2/c":'-',"2/d":PecaBranca,"2/e":'-',"2/f":PecaBranca,"2/g":'-',"2/h":PecaBranca,
-            "1/a":PecaBranca,"1/b":'-',"1/c":PecaBranca,"1/d":'-',"1/e":PecaBranca,"1/f":'-',"1/g":PecaBranca,"1/h":'-'}
+tabuleiro={ "8a":'-',"8b":PecaPreta,"8c":'-',"8d":PecaPreta,"8e":'-',"8f":PecaPreta,"8g":'-',"8h":PecaPreta,
+            "7a":PecaPreta,"7b":'-',"7c":PecaPreta,"7d":'-',"7e":PecaPreta,"7f":'-',"7g":PecaPreta,"7h":'-',
+            "6a":'-',"6b":PecaPreta,"6c":'-',"6d":PecaPreta,"6e":'-',"6f":PecaPreta,"6g":'-',"6h":PecaPreta,
+            "5a":'-',"5b":'-',"5c":'-',"5d":'-',"5e":'-',"5f":'-',"5g":'-',"5h":'-',
+            "4a":'-',"4b":'-',"4c":'-',"4d":'-',"4e":'-',"4f":'-',"4g":'-',"4h":'-',
+            "3a":PecaBranca,"3b":'-',"3c":PecaBranca,"3d":'-',"3e":PecaBranca,"3f":'-',"3g":PecaBranca,"3h":'-',
+            "2a":'-',"2b":PecaBranca,"2c":'-',"2d":PecaBranca,"2e":'-',"2f":PecaBranca,"2g":'-',"2h":PecaBranca,
+            "1a":PecaBranca,"1b":'-',"1c":PecaBranca,"1d":'-',"1e":PecaBranca,"1f":'-',"1g":PecaBranca,"1h":'-'}
 
 #Função de montar o tabuleiro no print.
 def MontarBulero():
@@ -118,7 +118,7 @@ def MontarBulero():
     for i in range(8):
         p = str(8-i)+"   "
         for j in range(8):
-            p += tabuleiro.get(str(8-i)+"/"+listinha.get(j))+" "
+            p += tabuleiro.get(str(8-i)+listinha.get(j))+" "
         print(p)
     a = "    "
     for i in range(8):
@@ -127,114 +127,113 @@ def MontarBulero():
     print(a)
     print()
 MontarBulero()
+
+    
+#Restrição caso o formato do input (sintaxe) esteja incorreto.
+def RestricaoMoviFormato(movi):
+    if len(movi)!=2 or movi[0] not in '12345678' or movi[1] not in 'abcdefgh' :
+        print("Formato não identificado")
+        print("Tente Novamente!!")
+        print("")
+        return False
+    else:
+        return True
+    
+#Restrição caso não haja peça no lugar selecionado.       
+def RestricaoMoviPeca(movi):
+    if tabuleiro[movi]=='-':
+        print("Essa jogada não pode ser realizada pois não há nenhuma peça na posicão informada")
+        print("Tente novamente!")
+        print("")
+        return False
+    else:
+        return True
+
+#Restrição caso a posição informada não exista.   
+def RestricaoMoviIne(movi):
+    if movi not in tabuleiro:
+        print("A posição informada não existe.")
+        print("Tente novamente!")
+        print("")
+        return False
+    else:
+        return True
+    
+#Restrição caso não seja a vez dessa peça jogar.
+def RestricaoMoviVez(movi):       
+    if tabuleiro[movi]!=vez:
+        print("Essa jogada não pode ser realizada pois a peça escolhida é a oposta a sua cor.")
+        print("Tente novamente!")
+        print("")
+        return False
+    else:
+        return True
+
+
+
+#RESTRIÇÕES DOS LUGARES DA PEÇA
+
+        
+#Restrição do formato (sintáxe) digitado pelo usuário.    
+def RestricaoLugarFormato(lugar):
+    if len(lugar)!=2 or lugar[0] not in '12345678 ' or movi[1] not in 'abcdefgh' :
+        print("Formato não identificado")
+        print("Tente Novamente!!")
+        print("")
+        return False
+    else:
+        return True
+    
+#Restrição de lugares já ocupados por outras peças.
+def RestricaoLugarOcupado(lugar):
+    if tabuleiro[lugar] in 'ox':
+        print("Não é possivel mover a peça para um lugar que já tenha outra peça!")
+        print("Tente Novamente!!")
+        print("")
+        return False
+    else:
+        return True
+
+
+    
+#Restrição de lugares que não podem colocar peças no tabuleiro.       
+def RestricaoLugarPosicao(lugar):
+    if int(lugar[0])%2==0 and lugar[1] in 'aceg' or int(lugar[0])%2!=0 and lugar[1] in 'bdfh' :
+        print("Não é possível colocar peças nessa posição.")
+        print("Tente Novamente!!")
+        print("")
+        return False
+    else:
+        return True
+    
+#Restrição das peças não poderem voltar casas   
+def RestricaoLugarFrente(lugar):
+    if vez==PecaBranca and int(lugar[0])<=int(movi[0]) or vez==PecaPreta and int(lugar[0])>=int(movi[0]):
+        print("Só é possível ir para frente com as peças!")
+        print("Tente novamente!!")
+        print("")
+        return False
+    else:
+        return True
+    
+#Restrição sobre as peças só poderem ir para uma casa de cada vez.      
+def RestricaoLugarVez(lugar):
+    if vez==PecaBranca and int(lugar[0])-int(movi[0])!=1 or vez==PecaPreta and int(lugar[0])-int(movi[0])!=-1 :
+        print("Não é possível andar mais de uma casa por vez!")
+        print("Tente novamente!!")
+        print("")
+        return False
+    else:
+        return True
+    #Função Mover peças. 
+def mover(PecaMovida,PecaLugar):
+        tabuleiro[PecaLugar]=tabuleiro[PecaMovida]
+        tabuleiro[PecaMovida]='-'
+    
+        
+        
 while True:
     
-    #Restrição caso o formato do input (sintaxe) esteja incorreto.
-    def RestricaoMoviFormato(movi):
-        if len(movi)!=3 or movi[0] not in '12345678' :
-            print("Formato não identificado")
-            print("Tente Novamente!!")
-            print("")
-            return False
-        else:
-            return True
-        
-    #Restrição caso não haja peça no lugar selecionado.       
-    def RestricaoMoviPeca(movi):
-        if tabuleiro[movi]=='-':
-            print("Essa jogada não pode ser realizada pois não há nenhuma peça na posicão informada")
-            print("Tente novamente!")
-            print("")
-            return False
-        else:
-            return True
-    
-    #Restrição caso a posição informada não exista.   
-    def RestricaoMoviIne(movi):
-        if movi not in tabuleiro:
-            print("A posição informada não existe.")
-            print("Tente novamente!")
-            print("")
-            return False
-        else:
-            return True
-        
-    #Restrição caso não seja a vez dessa peça jogar.
-    def RestricaoMoviVez(movi):       
-        if tabuleiro[movi]!=vez:
-            print("Essa jogada não pode ser realizada pois a peça escolhida é a oposta a sua cor.")
-            print("Tente novamente!")
-            print("")
-            return False
-        else:
-            return True
-    
-    
-    
-    #RESTRIÇÕES DOS LUGARES DA PEÇA
-    
-            
-    #Restrição do formato (sintáxe) digitado pelo usuário.    
-    def RestricaoLugarFormato(lugar):
-        if len(lugar)!=3 or lugar[0] not in '12345678':
-            print("Formato não identificado")
-            print("Tente Novamente!!")
-            print("")
-            return False
-        else:
-            return True
-        
-    #Restrição de lugares já ocupados por outras peças.
-    def RestricaoLugarOcupado(lugar):
-        if tabuleiro[lugar] in 'ox':
-            print("Não é possivel mover a peça para um lugar que já tenha outra peça!")
-            print("Tente Novamente!!")
-            print("")
-            return False
-        else:
-            return True
-    
-    
-        
-    #Restrição de lugares que não podem colocar peças no tabuleiro.       
-    def RestricaoLugarPosicao(lugar):
-        if int(lugar[0])%2==0 and lugar[2] in 'aceg' or int(lugar[0])%2!=0 and lugar[2] in 'bdfh' :
-            print("Não é possível colocar peças nessa posição.")
-            print("Tente Novamente!!")
-            print("")
-            return False
-        else:
-            return True
-        
-    #Restrição das peças não poderem voltar casas   
-    def RestricaoLugarFrente(lugar):
-        if vez==PecaBranca and int(lugar[0])<=int(movi[0]) or vez==PecaPreta and int(lugar[0])>=int(movi[0]):
-            print("Só é possível ir para frente com as peças!")
-            print("Tente novamente!!")
-            print("")
-            return False
-        else:
-            return True
-        
-    #Restrição sobre as peças só poderem ir para uma casa de cada vez.      
-    def RestricaoLugarVez(lugar):
-        if vez==PecaBranca and int(lugar[0])-int(movi[0])!=1 or vez==PecaPreta and int(lugar[0])-int(movi[0])!=-1 :
-            print("Não é possível andar mais de uma casa por vez!")
-            print("Tente novamente!!")
-            print("")
-            return False
-        else:
-            return True
-
-    
-        
-        
-        
-    #Função Mover peças. 
-    def mover(PecaMovida,PecaLugar):
-            tabuleiro[PecaLugar]=tabuleiro[PecaMovida]
-            tabuleiro[PecaMovida]='-'
-
     #De quem é a vez
     if vez=='o':
         print("VEZ DAS PEÇAS BRANCAS (o)")
@@ -244,14 +243,14 @@ while True:
     
     #Entrada
     
-    movi=input("Peça que será movida (ex: 3/g) ").lower()
-    lugar=input("Lugar para onde a peça irá (ex: 4/h) ").lower()
+    movi=input("Peça que será movida (ex: 3g) ").lower()
+    lugar=input("Lugar para onde a peça irá (ex: 4h) ").lower()
     
     #Verificação das restrições e caso alguma não seja cumprida, será necessário digitar novamente.
     while True:
         if RestricaoMoviFormato(movi)==False or RestricaoMoviPeca(movi)==False or RestricaoMoviIne(movi) == False or RestricaoMoviVez(movi) == False or RestricaoLugarFormato(lugar)==False or RestricaoLugarOcupado(lugar)==False or RestricaoLugarFormato(lugar) == False or RestricaoLugarPosicao(lugar) == False or RestricaoLugarFrente(lugar) == False or RestricaoLugarVez(lugar) == False:
-            movi=input("Peça que será movida (ex: 3/g) ").lower()
-            lugar=input("Lugar para onde a peça irá (ex: 4/h) ").lower()
+            movi=input("Peça que será movida (ex: 3g) ").lower()
+            lugar=input("Lugar para onde a peça irá (ex: 4h) ").lower()
         else:
             break
         
