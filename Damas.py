@@ -123,12 +123,13 @@ def montarBulero():
         for j in range(8):
             p += tabuleiro.get(str(8-i)+listinha.get(j))+" "
         print(p)
-    a = " "
+    a = "  "
     for i in range(8):
         a+=listinha.get(i)+" "
     print()
     print(a)
     print()
+    
 montarBulero()
 
    
@@ -230,17 +231,7 @@ def restricaoLugarImpo(movi,lugar):
             return False
         else:
             return True
-def restricaoLugarImpo(movi,lugar):
-    letrasres = {"a":1,"b":2,"c":3,"d":4,"e":5,"f":6,"g":7,"h":8}
-    if captura(movi,lugar)==False:
-        if vez=='o' and int(letrasres[movi[1]])-int(letrasres[lugar[1]]) not in [-1,1] or vez=='x' and int(letrasres[movi[1]])-int(letrasres[lugar[1]]) not in [-1,1] :
-            print("Impossível mover a peça para o local escolhido")
-            print("Tente Novamente!!")
-            print("")
-            return False
-        else:
-            return True
-    
+
 
    
 #Restrição de lugares que não podem colocar peças no tabuleiro.      
@@ -273,6 +264,16 @@ def restricaoLugarVez(lugar):
     else:
         return True
 
+#Restrição lugar da dama
+
+def retricaoLugarDama(movi,lugar):
+    if movi[0]==lugar[0]:
+        print("Não é possível andar para esse lugar com Dama!")
+        print("Tente novamente!!")
+        print("")
+        return False
+    else:
+        return True
    
 #Função Captura de peças.  
 def captura(movi,lugar):
@@ -341,7 +342,7 @@ while True:
                 else:
                     break
             else:
-                if restricaoMoviPeca(movi)==False or restricaoMoviIne(movi) == False or restricaoLugarFormato(lugar)==False or restricaoLugarOcupado(lugar)==False or restricaoLugarFormato(lugar) == False or restricaoLugarPosicao(lugar) == False or k>0:
+                if restricaoMoviPeca(movi)==False or restricaoMoviIne(movi) == False or restricaoLugarFormato(lugar)==False or restricaoLugarOcupado(lugar)==False or restricaoLugarFormato(lugar) == False or restricaoLugarPosicao(lugar) == False or retricaoLugarDama(movi,lugar) == False or k>0:
                     #restricaoLugarImpo(movi,lugar) == False or
                     movi=input("Peça que será movida (ex: 3g) ").lower()
                     lugar=input("Lugar para onde a peça irá (ex: 4h) ").lower()
